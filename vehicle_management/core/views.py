@@ -2,10 +2,10 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from .forms import VehicleForm
+from .forms import VehicleForm,RegistrationForm
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from .models import Vehicle
+from .models import Vehicle,Users
 from .decorators import auth_user
 # Create your views here.
 
@@ -54,3 +54,8 @@ class VehicleDeleteView(DeleteView):
         self.object.active_status = False
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+class UserCreateView(CreateView):
+    template_name = 'core/registration.html'
+    success_url = reverse_lazy('login')
+    form_class = RegistrationForm
