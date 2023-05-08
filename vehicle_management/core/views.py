@@ -6,9 +6,11 @@ from .forms import VehicleForm
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from .models import Vehicle
+from .decorators import auth_user
 # Create your views here.
 
 @method_decorator(login_required,name='dispatch')
+@method_decorator(auth_user(['SUPER ADMIN']),name='dispatch')
 class VehicleCreateView(CreateView):
     model = Vehicle
     template_name = 'core/form.html'
@@ -34,6 +36,7 @@ class VehicleList(ListView):
         return context
 
 @method_decorator(login_required,name='dispatch')
+@method_decorator(auth_user(['SUPER ADMIN','ADMIN']),name='dispatch')
 class VehicleUpdateView(UpdateView):
     model = Vehicle
     template_name = 'core/form.html'
@@ -41,6 +44,7 @@ class VehicleUpdateView(UpdateView):
     success_url = "/"
 
 @method_decorator(login_required,name='dispatch')
+@method_decorator(auth_user(['SUPER ADMIN']),name='dispatch')
 class VehicleDeleteView(DeleteView):
     model = Vehicle
     success_url = reverse_lazy('home')
