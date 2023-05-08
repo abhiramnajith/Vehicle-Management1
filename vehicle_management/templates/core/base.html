@@ -18,15 +18,22 @@
 <body>
   {%block navbar%}
   <nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="{% static 'images/vehicle.jpg' %}" alt="" width="50" height="24"
-          class="d-inline-block align-text-top">
-        Vehicle Management
-      </a>
-      {%if request.user.user_type == 'SUPER ADMIN' %}
+    <div class="container-fluid flex">
+      <div>
+        <a class="navbar-brand" href="#">
+          <img src="{% static 'images/vehicle.jpg' %}" alt="" width="50" height="24"
+            class="d-inline-block align-text-top">
+          Vehicle Management
+        </a>
+      </div>
+ 
+      <div>
+        {%if request.user.user_type == 'SUPER ADMIN' %}
         <a href="{% url 'create_vehicle'%}" class="btn btn-info">Create</a>
       {%endif%}
+      <a href="{% url 'logout'%}" class="btn btn-danger">logout</a>
+      </div>
+
     </div>
   </nav>
   {%endblock%}
