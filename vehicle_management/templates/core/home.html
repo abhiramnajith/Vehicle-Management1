@@ -1,0 +1,45 @@
+{%extends 'core/base.html' %}
+{% load static %}
+{% block content%}
+<div class="row">
+    {%for vehicle in object_list %}
+    <div class="col-sm-6">
+        <div class="card border-info mb-3" style="max-width: 18rem;">
+            <div class="card-body">
+                <h4 class="card-title text-primary">{{vehicle.vehicle_number}}</h4>
+                <h5 class="card-title">{{vehicle.modal}}</h5>
+                <p class="card-text">{{vehicle.vehicle_option}}</p>
+                <p class="card-text">{{vehicle.description}}</p>
+                {%if request.user.user_type == 'SUPER ADMIN' %}
+                    <a href="{% url 'edit_vehicle' vehicle.id%}" class="btn btn-info">Edit</a>
+                    <a href="{% url 'delete_vehicle' vehicle.id%}" class="btn btn-danger">DELETE</a>
+                {% elif request.user.user_type == 'ADMIN' %}
+                    <a href="{% url 'edit_vehicle' vehicle.id%}" class="btn btn-info">Edit</a>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+<style>
+    .row {
+        display: flex;
+        width: 900px;
+        padding: 30px;
+        /* margin-right: 10px;
+        margin-left: 10px; */
+        margin: 20px auto;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .card {
+        margin: 10px;
+    }
+
+    body {
+        background-color: aquamarine;
+    }
+</style>
+
+{%endblock%}
